@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Development helper for the Cookie Clicker Expanded mod (macOS; browser version and Steam version of the game).
-# Run without arguments for usage. Override the Steam game location with CC_APP and the debugger port with CC_DEBUG_PORT.
+# Run without arguments for usage. Overrides: CC_APP (Steam game), CC_CHROME (Chrome), CC_DEBUG_PORT / CC_BROWSER_PORT.
 
 set -euo pipefail
 
@@ -13,13 +13,17 @@ SAVE="$RES/save/save.cki"
 PORT="${CC_DEBUG_PORT:-9222}"
 WEB_URL="https://orteil.dashnet.org/cookieclicker"
 WEB_SRC="$REPO/game-web"
+CHROME_APP="${CC_CHROME:-/Applications/Google Chrome.app}"
+BROWSER_PORT="${CC_BROWSER_PORT:-9223}"
+DEV_DIR="$REPO/.dev"
 
 usage() {
 	cat <<EOF
 Verwendung: ./scripts/dev.sh <befehl>
 
 Browser (zuerst):
-  web        mod/main.js in die Zwischenablage kopieren, zum Einfügen in die Konsole des Browser-Spiels
+  browser    Browser-Spiel in Chrome (eigenes Entwicklerprofil) öffnen, der Mod wird automatisch geladen
+  web        mod/main.js in die Zwischenablage kopieren (zum Gegentest in Safari)
   fetch-web  aktuellen Code des Browser-Spiels nach game-web/ laden (zum Nachschlagen)
 
 Steam:
@@ -27,7 +31,8 @@ Steam:
   unlink     beide Links wieder entfernen
   backup     aktuellen Spielstand nach saves/ kopieren
   run        Spielstand sichern, dann das Spiel mit offenem Debug-Port ($PORT) starten
-  status     Pfade, Links und Zustand von Spiel/Debug-Port anzeigen
+
+  status     Zustand von Browser- und Steam-Umgebung anzeigen
 EOF
 }
 
@@ -45,12 +50,42 @@ debug_port_up() {
 	[[ "$info" == *Electron* ]]
 }
 
+browser_port_up() { curl -fs --max-time 1 "http://127.0.0.1:$BROWSER_PORT/json/version" >/dev/null 2>&1; }
+
+helper_running() {
+	[ -f "$DEV_DIR/browser_dev.pid" ] && ps -p "$(cat "$DEV_DIR/browser_dev.pid")" -o command= 2>/dev/null | grep -q browser_dev.py
+}
+
 make_link() {
 	local target="$1" link="$2"
 	if [ -e "$link" ] && [ ! -L "$link" ]; then
 		die "$link existiert bereits und ist kein Symlink. Bitte manuell prüfen."
 	fi
 	ln -sfn "$target" "$link" || die "Konnte $link nicht anlegen. Falls macOS den Zugriff blockiert: Systemeinstellungen > Datenschutz & Sicherheit > App-Verwaltung > Visual Studio Code erlauben."
+}
+
+cmd_browser() {
+	[ -d "$CHROME_APP" ] || die "Google Chrome nicht gefunden unter: $CHROME_APP (anderen Pfad per CC_CHROME setzen)"
+	mkdir -p "$DEV_DIR"
+	if ! browser_port_up; then
+		# A separate profile keeps the browser game's save apart from normal browsing and is required for the debug port.
+		open -na "$CHROME_APP" --args --user-data-dir="$DEV_DIR/chrome-profile" --remote-debugging-port="$BROWSER_PORT" \
+			--no-first-run --no-default-browser-check "$WEB_URL/"
+		printf 'Warte auf Chrome'
+		for _ in $(seq 1 40); do
+			if browser_port_up; then break; fi
+			printf '.'
+			sleep 0.5
+		done
+		echo
+		browser_port_up || die "Chrome-Debug-Port $BROWSER_PORT ist nach 20 Sekunden nicht erreichbar."
+	fi
+	if ! helper_running; then
+		nohup python3 -I "$REPO/scripts/browser_dev.py" "$BROWSER_PORT" </dev/null >"$DEV_DIR/browser_dev.log" 2>&1 &
+		echo $! >"$DEV_DIR/browser_dev.pid"
+	fi
+	echo "Browser-Spiel läuft in Chrome (Debug-Port $BROWSER_PORT). Der Mod wird nach jedem Laden automatisch eingespielt."
+	echo "Protokoll: .dev/browser_dev.log"
 }
 
 cmd_web() {
@@ -115,14 +150,20 @@ cmd_run() {
 }
 
 cmd_status() {
-	printf 'Spiel:        %s %s\n' "$APP" "$([ -d "$RES" ] && echo '(gefunden)' || echo '(NICHT gefunden)')"
-	printf 'Mod-Link:     %s\n' "$([ -L "$MOD_LINK" ] && readlink "$MOD_LINK" || echo 'nicht verlinkt')"
-	printf 'Referenz:     %s\n' "$([ -L "$GAME_LINK" ] && readlink "$GAME_LINK" || echo 'nicht verlinkt')"
-	printf 'Spiel läuft:  %s\n' "$(game_running && echo ja || echo nein)"
-	printf 'Debug-Port:   %s\n' "$(debug_port_up && echo "offen ($PORT)" || echo "geschlossen ($PORT)")"
+	echo "Browser"
+	printf '  Chrome:       %s\n' "$([ -d "$CHROME_APP" ] && echo "$CHROME_APP" || echo 'NICHT gefunden')"
+	printf '  Debug-Port:   %s\n' "$(browser_port_up && echo "offen ($BROWSER_PORT)" || echo "geschlossen ($BROWSER_PORT)")"
+	printf '  Mod-Helfer:   %s\n' "$(helper_running && echo läuft || echo 'läuft nicht')"
+	echo "Steam"
+	printf '  Spiel:        %s %s\n' "$APP" "$([ -d "$RES" ] && echo '(gefunden)' || echo '(NICHT gefunden)')"
+	printf '  Mod-Link:     %s\n' "$([ -L "$MOD_LINK" ] && readlink "$MOD_LINK" || echo 'nicht verlinkt')"
+	printf '  Referenz:     %s\n' "$([ -L "$GAME_LINK" ] && readlink "$GAME_LINK" || echo 'nicht verlinkt')"
+	printf '  Spiel läuft:  %s\n' "$(game_running && echo ja || echo nein)"
+	printf '  Debug-Port:   %s\n' "$(debug_port_up && echo "offen ($PORT)" || echo "geschlossen ($PORT)")"
 }
 
 case "${1:-}" in
+	browser)   cmd_browser ;;
 	web)       cmd_web ;;
 	fetch-web) cmd_fetch_web ;;
 	link)      cmd_link ;;

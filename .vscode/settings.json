@@ -4,11 +4,25 @@
 		"game/**": true,
 		"game-web/**": true
 	},
+	// the development Chrome profile is large and changes constantly
+	"files.exclude": {
+		".dev/chrome-profile": true
+	},
+	"files.watcherExclude": {
+		"**/.dev/chrome-profile/**": true
+	},
+	"search.exclude": {
+		".dev": true
+	},
 	"files.associations": {
 		"**/mod/info.txt": "json"
 	},
 	// same indentation as the game's own code
 	"[javascript]": {
+		"editor.insertSpaces": false,
+		"editor.tabSize": 4
+	},
+	"[python]": {
 		"editor.insertSpaces": false,
 		"editor.tabSize": 4
 	}

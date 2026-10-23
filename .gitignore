@@ -1,8 +1,12 @@
 .DS_Store
+__pycache__/
 
 # The game's own code, only for reference (created by scripts/dev.sh link / fetch-web). Game files must never be committed.
 /game
 /game-web/
+
+# Development Chrome profile and helper log (created by scripts/dev.sh browser)
+/.dev/
 
 # Save game backups (created by scripts/dev.sh backup/run)
 /saves/

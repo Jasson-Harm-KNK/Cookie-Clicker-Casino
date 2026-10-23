@@ -2,11 +2,17 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			// Cmd+Shift+B: copy the mod for pasting into the browser game's console
-			"label": "Browser: Mod in Zwischenablage",
+			// also on Cmd+Shift+B: browser game in Chrome without attaching the debugger
+			"label": "Browser starten",
+			"type": "shell",
+			"command": "./scripts/dev.sh browser",
+			"group": { "kind": "build", "isDefault": true },
+			"problemMatcher": []
+		},
+		{
+			"label": "Safari: Mod in Zwischenablage",
 			"type": "shell",
 			"command": "./scripts/dev.sh web",
-			"group": { "kind": "build", "isDefault": true },
 			"problemMatcher": []
 		},
 		{
@@ -16,19 +22,19 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Spiel starten (Debug)",
+			"label": "Steam starten",
 			"type": "shell",
 			"command": "./scripts/dev.sh run",
 			"problemMatcher": []
 		},
 		{
-			"label": "Mod verlinken",
+			"label": "Steam: Mod verlinken",
 			"type": "shell",
 			"command": "./scripts/dev.sh link",
 			"problemMatcher": []
 		},
 		{
-			"label": "Spielstand sichern",
+			"label": "Steam: Spielstand sichern",
 			"type": "shell",
 			"command": "./scripts/dev.sh backup",
 			"problemMatcher": []

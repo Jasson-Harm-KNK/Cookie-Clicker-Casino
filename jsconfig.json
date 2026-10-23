@@ -5,5 +5,5 @@
 		"checkJs": false
 	},
 	"include": ["mod/**/*.js", "types/**/*.d.ts"],
-	"exclude": ["game", "game-web", "saves"]
+	"exclude": ["game", "game-web", "saves", ".dev"]
 }

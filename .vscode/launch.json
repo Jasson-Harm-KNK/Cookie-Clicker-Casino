@@ -2,13 +2,27 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			// F5: starts the game with the debug port open (if needed) and attaches VS Code's debugger.
-			// The Debug Console is then the game's JavaScript console.
-			"name": "Cookie Clicker (Debug)",
+			// F5: opens the browser game in the development Chrome (the mod is loaded automatically)
+			// and attaches VS Code's debugger. The Debug Console is then the game's JavaScript console.
+			"name": "Browser (Chrome)",
+			"type": "chrome",
+			"request": "attach",
+			"port": 9223,
+			"urlFilter": "https://orteil.dashnet.org/cookieclicker/*",
+			"preLaunchTask": "Browser starten",
+			"webRoot": "${workspaceFolder}",
+			// scripts/browser_dev.py serves mod/ under this path, so breakpoints in mod/ work
+			"pathMapping": {
+				"/__dev_mod__": "${workspaceFolder}/mod"
+			}
+		},
+		{
+			// Starts the Steam game with its debug port open (if needed) and attaches VS Code's debugger.
+			"name": "Steam",
 			"type": "chrome",
 			"request": "attach",
 			"port": 9222,
-			"preLaunchTask": "Spiel starten (Debug)",
+			"preLaunchTask": "Steam starten",
 			"webRoot": "${workspaceFolder}/mod"
 		}
 	]

@@ -6,6 +6,7 @@ Kein Build und kein Node: Beide Versionen laden `mod/main.js` direkt. Einrichtun
 ## Arbeitsweise
 
 - **Browser zuerst** (Vorgabe des Nutzers): Jede Funktion muss im Browser funktionieren, bevor die Arbeit für Steam beginnt. Machbarkeit immer zuerst für den Browser prüfen.
+- Entwickelt wird im Browser mit Chrome und einem eigenen Entwicklerprofil (F5 „Browser (Chrome)“), Safari dient nur zum Gegentest.
 - Danach auf Steam testen und nur dort Nötiges ergänzen (info.txt, Sprachdateien, Workshop).
 
 ## Fakten
@@ -31,7 +32,8 @@ Kein Build und kein Node: Beide Versionen laden `mod/main.js` direkt. Einrichtun
 
 ## Im laufenden Spiel testen
 
-- Browser: Hier gibt es keine Fernsteuerung. Nur Safari ist installiert; der Nutzer fügt den Code selbst in die Konsole ein (`./scripts/dev.sh web` kopiert ihn).
-- Steam: Das Spiel öffnet sich sichtbar auf dem Bildschirm des Nutzers, deshalb vorher Bescheid geben. `./scripts/dev.sh run` legt ein Save-Backup an und startet das Spiel mit `--remote-debugging-port=9222`. Danach ist es per Chrome DevTools Protocol erreichbar: `http://127.0.0.1:9222/json/list` liefert `webSocketDebuggerUrl`, darüber läuft `Runtime.evaluate`. Node und `websocat` sind nicht installiert, Python 3.9 schon (nur stdlib).
+- Beide Spiele öffnen sich sichtbar auf dem Bildschirm des Nutzers, deshalb vor dem Start Bescheid geben.
+- Browser: `./scripts/dev.sh browser` startet Chrome mit dem Profil `.dev/chrome-profile` und `--remote-debugging-port=9223` und startet `scripts/browser_dev.py`. Das Skript liefert `mod/` per CDP-`Fetch` unter `https://orteil.dashnet.org/__dev_mod__/` aus, lädt den Mod nach jedem Seitenaufbau (Marker `window.__devModLoaded`) und löst bei Dateiänderungen `Game.toSave=true;Game.toReload=true` aus. Das Protokoll steht in `.dev/browser_dev.log`. Für eigene Abfragen eignen sich `Connection` und `game_target()` aus `scripts/browser_dev.py` (es liest beim Import `sys.argv[1]` als Port). Der erste Start in einem frischen Profil zeigt die Sprachauswahl; die Auswahl lädt die Seite neu.
+- Steam: `./scripts/dev.sh run` legt ein Save-Backup an und startet das Spiel mit `--remote-debugging-port=9222`. Danach ist es per Chrome DevTools Protocol erreichbar: `http://127.0.0.1:9222/json/list` liefert `webSocketDebuggerUrl`, darüber läuft `Runtime.evaluate`. Node und `websocat` sind nicht installiert, Python 3.9 schon (nur stdlib).
 - Auf Steam neu laden, inklusive Mods und mit vorherigem Speichern: `Game.toSave=true;Game.toReload=true`.
 - Im VS-Code-Extension-Host, also auch in Claude Code, ist `ELECTRON_RUN_AS_NODE=1` gesetzt. Das Steam-Spiel deshalb nur über `dev.sh` starten, das die Variable entfernt.
