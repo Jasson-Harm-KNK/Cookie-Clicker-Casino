@@ -1,0 +1,10 @@
+{
+	"Name": "Cookie Clicker Expanded",
+	"ID": "cookie clicker expanded",
+	"Author": "jasson",
+	"Description": "An expansion for Cookie Clicker. Work in progress.",
+	"ModVersion": 1,
+	"GameVersion": 2.053,
+	"Date": "23/10/2026",
+	"Dependencies": []
+}

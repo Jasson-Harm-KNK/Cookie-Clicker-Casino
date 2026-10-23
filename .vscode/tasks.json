@@ -1,0 +1,43 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			// Cmd+Shift+B: copy the mod for pasting into the browser game's console
+			"label": "Browser: Mod in Zwischenablage",
+			"type": "shell",
+			"command": "./scripts/dev.sh web",
+			"group": { "kind": "build", "isDefault": true },
+			"problemMatcher": []
+		},
+		{
+			"label": "Browser: Spielcode aktualisieren",
+			"type": "shell",
+			"command": "./scripts/dev.sh fetch-web",
+			"problemMatcher": []
+		},
+		{
+			"label": "Spiel starten (Debug)",
+			"type": "shell",
+			"command": "./scripts/dev.sh run",
+			"problemMatcher": []
+		},
+		{
+			"label": "Mod verlinken",
+			"type": "shell",
+			"command": "./scripts/dev.sh link",
+			"problemMatcher": []
+		},
+		{
+			"label": "Spielstand sichern",
+			"type": "shell",
+			"command": "./scripts/dev.sh backup",
+			"problemMatcher": []
+		},
+		{
+			"label": "Status",
+			"type": "shell",
+			"command": "./scripts/dev.sh status",
+			"problemMatcher": []
+		}
+	]
+}

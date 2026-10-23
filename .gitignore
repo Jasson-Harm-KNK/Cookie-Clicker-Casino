@@ -1,0 +1,8 @@
+.DS_Store
+
+# The game's own code, only for reference (created by scripts/dev.sh link / fetch-web). Game files must never be committed.
+/game
+/game-web/
+
+# Save game backups (created by scripts/dev.sh backup/run)
+/saves/

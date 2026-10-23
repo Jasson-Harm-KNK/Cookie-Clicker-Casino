@@ -1,0 +1,15 @@
+{
+	// game/ (Steam) and game-web/ (browser) contain the game's own code and are reference only
+	"files.readonlyInclude": {
+		"game/**": true,
+		"game-web/**": true
+	},
+	"files.associations": {
+		"**/mod/info.txt": "json"
+	},
+	// same indentation as the game's own code
+	"[javascript]": {
+		"editor.insertSpaces": false,
+		"editor.tabSize": 4
+	}
+}

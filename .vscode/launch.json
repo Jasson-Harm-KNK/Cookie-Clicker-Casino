@@ -1,0 +1,15 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			// F5: starts the game with the debug port open (if needed) and attaches VS Code's debugger.
+			// The Debug Console is then the game's JavaScript console.
+			"name": "Cookie Clicker (Debug)",
+			"type": "chrome",
+			"request": "attach",
+			"port": 9222,
+			"preLaunchTask": "Spiel starten (Debug)",
+			"webRoot": "${workspaceFolder}/mod"
+		}
+	]
+}
