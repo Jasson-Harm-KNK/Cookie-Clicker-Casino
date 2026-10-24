@@ -13,6 +13,8 @@ Der Mod bringt das **Casino**, ein Spezialgebäude zwischen Alchemielabor und Po
 
 ## Installation (für Spieler)
 
+Für Spieler gibt es eine Startseite auf Englisch: https://jassonharm.github.io/Cookie-Clicker-Casino/ (mit Knopf zum Ziehen in die Lesezeichenleiste, Workshop-Link und Screenshots).
+
 - **Browser:** ein Lesezeichen mit dieser Adresse anlegen und im geöffneten Spiel anklicken. Nach jedem Neuladen der Seite erneut anklicken.
   ```
   javascript:(function(){Game.LoadMod('https://jassonharm.github.io/Cookie-Clicker-Casino/mod/main.js');}());
@@ -78,6 +80,7 @@ Weitere Befehle: `./scripts/dev.sh status | backup | unlink`. Alle Befehle gibt 
 
 | Pfad | Inhalt |
 |---|---|
+| `index.html` | Startseite für Spieler auf GitHub Pages (Englisch) |
 | `mod/` | Der eigentliche Mod. Nur Dateien, die ausgeliefert werden, denn der Steam-Workshop-Upload packt den Ordner komplett. |
 | `mod/main.js` | Einstiegspunkt, für Browser und Steam |
 | `mod/minigameCasino.js` | Minispiel des Casinos mit einem Spiel pro Casino: Roulette, Blackjack, Jackpot, Crash, Slots, Plinko (lädt das Spiel ab Casino-Stufe 1) |
