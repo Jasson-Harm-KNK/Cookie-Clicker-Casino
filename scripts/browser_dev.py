@@ -16,7 +16,8 @@ DEV_URL = 'https://orteil.dashnet.org/__dev_mod__/'
 
 GAME_STATE = "typeof Game!=='undefined' && Game.ready ? (window.__devModLoaded ? 'loaded' : 'ready') : 'waiting'"
 LOAD_MOD = "window.__devModLoaded=1;Game.LoadMod('" + DEV_URL + "main.js');'ok'"
-SAVE_AND_RELOAD = "Game.toSave=true;Game.toReload=true;'ok'"
+# not via Game.toReload: that waits for the game loop, which Chrome slows down a lot while the window is in the background
+SAVE_AND_RELOAD = "try{Game.WriteSave();}finally{location.reload();}"
 
 
 def log(text):

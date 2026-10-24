@@ -1,10 +1,10 @@
 {
-	"Name": "Cookie Clicker Expanded",
-	"ID": "cookie clicker expanded",
+	"Name": "Cookie Clicker Casino",
+	"ID": "cookie clicker casino",
 	"Author": "jasson",
-	"Description": "An expansion for Cookie Clicker. Work in progress.",
+	"Description": "A Casino building with six casino games: Roulette, Blackjack, Jackpot, Crash, Slots and Plinko. Each casino you own (up to 6) unlocks one game. Level the Casino up once to play.",
 	"ModVersion": 1,
 	"GameVersion": 2.053,
-	"Date": "23/10/2026",
+	"Date": "24/10/2026",
 	"Dependencies": []
 }

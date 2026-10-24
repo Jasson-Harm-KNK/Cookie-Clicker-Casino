@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Development helper for the Cookie Clicker Expanded mod (macOS; browser version and Steam version of the game).
+# Development helper for the Cookie Clicker Casino mod (macOS; browser version and Steam version of the game).
 # Run without arguments for usage. Overrides: CC_APP (Steam game), CC_CHROME (Chrome), CC_DEBUG_PORT / CC_BROWSER_PORT.
 
 set -euo pipefail
@@ -7,7 +7,7 @@ set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 APP="${CC_APP:-$HOME/Library/Application Support/Steam/steamapps/common/Cookie Clicker/Cookie Clicker.app}"
 RES="$APP/Contents/Resources/app"
-MOD_LINK="$RES/mods/local/CookieClickerExpanded"
+MOD_LINK="$RES/mods/local/CookieClickerCasino"
 GAME_LINK="$REPO/game"
 SAVE="$RES/save/save.cki"
 PORT="${CC_DEBUG_PORT:-9222}"

@@ -1,14 +1,19 @@
-# Cookie Clicker Expanded
+# Cookie Clicker Casino
 
-Eine Erweiterung (Mod) für [Cookie Clicker](https://orteil.dashnet.org/cookieclicker/) von Orteil / DashNet, für die Browser- und die Steam-Version.
-Kostenloses, nicht-kommerzielles Fan-Projekt, noch in Arbeit. Der Name ist ein Arbeitstitel bis zur ersten Veröffentlichung.
+Ein Mod für [Cookie Clicker](https://orteil.dashnet.org/cookieclicker/) von Orteil / DashNet, für die Browser- und die Steam-Version.
+Kostenloses, nicht-kommerzielles Fan-Projekt.
+
+Der Mod bringt das **Casino**, ein Spezialgebäude zwischen Alchemielabor und Portal. Es produziert keine Kekse; jedes Casino (höchstens 6) schaltet ein Casinospiel frei: Roulette, Blackjack, Jackpot, Crash, Slots und Plinko. Gespielt wird mit beliebig vielen Keksen im Minispiel des Casinos, das sich ab Casino-Stufe 1 (ein Zuckerstück) öffnet.
 
 ## Installation (für Spieler)
 
-Noch nicht veröffentlicht. Geplant ist Folgendes:
+- **Browser:** ein Lesezeichen mit dieser Adresse anlegen und im geöffneten Spiel anklicken. Nach jedem Neuladen der Seite erneut anklicken.
+  ```
+  javascript:(function(){Game.LoadMod('https://jassonharm.github.io/Cookie-Clicker-Casino/mod/main.js');}());
+  ```
+- **Steam:** den Mod im Steam Workshop abonnieren (Link folgt nach der Veröffentlichung) und im Spiel unter *Optionen → Mods verwalten* prüfen, dass er aktiv ist. Manuell geht es auch: den Ordner `mod/` nach `<Spielordner>/mods/local/` kopieren.
 
-- **Browser:** ein Lesezeichen (Bookmarklet), das den Mod in das geöffnete Spiel lädt. Es muss nach jedem Neuladen der Seite erneut angeklickt werden.
-- **Steam:** über den Steam Workshop. Manuell geht es auch: den Ordner `mod/` nach `<Spielordner>/mods/local/` kopieren und im Spiel unter *Optionen → Mods verwalten* aktivieren.
+Solange der Mod auf Steam aktiv ist, sperrt das Spiel Steam-Errungenschaften, wie bei jedem Mod.
 
 ## Entwicklung
 
@@ -30,7 +35,7 @@ Beide Ordner sind in VS Code schreibgeschützt und kommen nicht ins Git.
 ### 1. Im Browser testen
 
 1. **F5** in VS Code (Startkonfiguration „Browser (Chrome)“) öffnet das Browser-Spiel in Chrome und verbindet den VS-Code-Debugger. Chrome läuft dabei mit einem eigenen Entwicklerprofil (`.dev/chrome-profile`). Der Mod wird nach jedem Laden der Seite automatisch eingespielt. **Cmd+Shift+B** macht dasselbe ohne Debugger.
-2. Die **Debug-Konsole** ist dann die JavaScript-Konsole des Spiels, z. B. für `Game.mods['cookie clicker expanded'].data` oder `Game.Earn(1e6)`.
+2. Die **Debug-Konsole** ist dann die JavaScript-Konsole des Spiels, z. B. für `Game.mods['cookie clicker casino'].data` oder `Game.Earn(1e6)`.
 3. Sobald du eine Datei in `mod/` speicherst, speichert das Spiel und lädt neu, und der Mod kommt in der neuen Fassung wieder hinein.
 4. Breakpoints in `mod/` setzen oder `debugger;` in den Code schreiben.
 
@@ -43,7 +48,7 @@ Das Entwicklerprofil hat einen eigenen Browser-Spielstand, der bei null beginnt.
 ### 2. Danach auf Steam
 
 1. In VS Code unter *Ausführen und Debuggen* die Startkonfiguration „Steam“ wählen und **F5** drücken. Das sichert den Spielstand, startet das Spiel mit offenem Debug-Port und verbindet den VS-Code-Debugger. Ein Spiel, das schon ohne Debug-Port läuft (z. B. über Steam gestartet), muss vorher beendet werden.
-2. Die **Debug-Konsole** ist dann die JavaScript-Konsole des Spiels, z. B. für `Game.mods['cookie clicker expanded'].data`.
+2. Die **Debug-Konsole** ist dann die JavaScript-Konsole des Spiels, z. B. für `Game.mods['cookie clicker casino'].data`.
 3. Nach Änderungen ohne Neustart neu laden, mit `Game.toSave=true;Game.toReload=true` in der Debug-Konsole. Das Spiel speichert dann und lädt alle Mods neu.
 4. Für Breakpoints `debugger;` in den Code schreiben. Breakpoints, die man in `mod/main.js` per Klick setzt, greifen auf Steam nicht.
 
@@ -69,7 +74,10 @@ Weitere Befehle: `./scripts/dev.sh status | backup | unlink`. Alle Befehle gibt 
 |---|---|
 | `mod/` | Der eigentliche Mod. Nur Dateien, die ausgeliefert werden, denn der Steam-Workshop-Upload packt den Ordner komplett. |
 | `mod/main.js` | Einstiegspunkt, für Browser und Steam |
+| `mod/minigameCasino.js` | Minispiel des Casinos mit einem Spiel pro Casino: Roulette, Blackjack, Jackpot, Crash, Slots, Plinko (lädt das Spiel ab Casino-Stufe 1) |
 | `mod/info.txt` | Metadaten für Steam; das Format beschreibt `game/mods/ReadMe.txt` |
+| `mod/img/` | Eigene Grafiken des Mods |
+| `art/` | Skripte, die die Grafiken in `mod/img/` erzeugen (brauchen Pillow, siehe Kopf der Skripte) |
 | `scripts/dev.sh` | Alle Entwicklungsbefehle (ohne Argument aufrufen für eine Übersicht) |
 | `scripts/browser_dev.py` | Hält den Mod im Browser-Spiel geladen (wird von `dev.sh browser` gestartet) |
 | `types/` | Typ-Hinweise für die Autovervollständigung in VS Code |
@@ -79,19 +87,15 @@ Weitere Befehle: `./scripts/dev.sh status | backup | unlink`. Alle Befehle gibt 
 
 ### Veröffentlichen
 
-**Browser:** Der Mod wird über GitHub Pages bereitgestellt. Dafür im öffentlichen GitHub-Repository unter *Settings → Pages* den Branch `main` mit dem Ordner `/ (root)` auswählen. Spieler legen dann ein Lesezeichen mit dieser Adresse an (`<github-user>` ersetzen):
-
-```
-javascript:(function(){Game.LoadMod('https://<github-user>.github.io/Cookie-Clicker-Expanded/mod/main.js');}());
-```
+**Browser:** GitHub Pages liefert den Branch `main` aus (Ordner `/`). Jeder Push auf `main` ist damit nach wenigen Minuten live; das Lesezeichen der Spieler lädt immer den aktuellen Stand.
 
 **Steam Workshop:**
 
-1. In `mod/info.txt` die `ModVersion` erhöhen und `Date` (TT/MM/JJJJ) aktualisieren, bei Bedarf auch `GameVersion`.
-2. Optional ein Vorschaubild `mod/thumbnail.png` ablegen (unter 1 MB).
-3. Im Spiel *Optionen → Mods veröffentlichen → Neue Mod – Ordner auswählen* öffnen, den Ordner `mod/` wählen und *Im Workshop veröffentlichen* klicken. Updates laufen später über *Veröffentlichte Mods aktualisieren*.
+1. In `mod/info.txt` die `ModVersion` erhöhen und `Date` (TT/MM/JJJJ) aktualisieren, bei Bedarf auch `GameVersion`. Die Beschreibung in `info.txt` wird beim ersten Hochladen zur Beschreibung im Workshop.
+2. Das Vorschaubild `mod/thumbnail.png` (unter 1 MB) erzeugt `art/casino.py`.
+3. Im Spiel *Optionen → Mods veröffentlichen → Veröffentlichte Mods aktualisieren* öffnen, beim Casino den Ordner `mod/` wählen und hochladen. Name, Beschreibung und Bilder ändert man auf der Workshop-Seite.
 
-Die ID (`cookie clicker expanded`) darf sich nach der ersten Veröffentlichung nicht mehr ändern, denn das Spiel speichert die Daten des Mods unter dieser ID.
+Die ID (`cookie clicker casino`) darf sich nie mehr ändern, denn das Spiel speichert die Daten des Mods unter dieser ID.
 
 ## Rechtliches
 
