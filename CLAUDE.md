@@ -42,6 +42,7 @@ Kein Build und kein Node: Beide Versionen laden `mod/main.js` direkt. Einrichtun
 - 48-px-Icons (`icons.png`-Stil): Objekt etwa 32×32 zentriert, rund 5 bis 10 Farben, Umriss (52,21,23). Die Varianten für Goldkeks-Boost und -Last entstehen per Umfärbung (Gold mit Funkeln, blassgrün mit Tropfen).
 - Gebäudereihe: Hintergrund 128×128, wird waagerecht gekachelt und muss nahtlos sein; Figuren 64×64, mit `art.frames` mehrere Varianten nebeneinander in einem Bild.
 - Alle Casino-Grafiken erzeugt `art/casino.py`.
+- Die Screenshots der Spiele in `docs/screenshots/` (Readme, für den Workshop gedacht) erzeugt `art/screenshots.py`: das Minispiel in einer Testseite mit headless Chrome, schlichter eigener Hintergrund statt der Spielgrafiken, der Knopfstil des Spiels aus seinen CSS-Werten nachgebaut. Nach Änderungen an der Oberfläche neu erzeugen.
 - Zur Sichtkontrolle: Screenshots per CDP sind schwarz, solange das Chrome-Fenster im Hintergrund liegt. Gebäudereihen lassen sich trotzdem prüfen (`me.draw()` aufrufen, dann `canvas.toDataURL()`). DOM-Oberflächen (z. B. Minispiele) in einer kleinen Testseite mit headless Chrome rendern, mit dem `style.css` des Spiels (`<base href>` auf `game/src/`). Ohne es fehlen dessen Regeln: Es unterstreicht z. B. alle `<a>` und färbt `.red`/`.green`. Vorschauen mit Spielgrafiken nur im Scratchpad, nie committen.
 
 ## Regeln

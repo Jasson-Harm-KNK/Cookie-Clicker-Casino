@@ -5,6 +5,12 @@ Kostenloses, nicht-kommerzielles Fan-Projekt.
 
 Der Mod bringt das **Casino**, ein Spezialgebäude zwischen Alchemielabor und Portal. Es produziert keine Kekse; jedes Casino (höchstens 6) schaltet ein Casinospiel frei: Roulette, Blackjack, Jackpot, Crash, Slots und Plinko. Gespielt wird mit beliebig vielen Keksen im Minispiel des Casinos, das sich ab Casino-Stufe 1 (ein Zuckerstück) öffnet.
 
+<p>
+<img src="docs/screenshots/roulette.png" width="49%" alt="Roulette"> <img src="docs/screenshots/blackjack.png" width="49%" alt="Blackjack">
+<img src="docs/screenshots/jackpot.png" width="49%" alt="Jackpot"> <img src="docs/screenshots/crash.png" width="49%" alt="Crash">
+<img src="docs/screenshots/slots.png" width="49%" alt="Slots"> <img src="docs/screenshots/plinko.png" width="49%" alt="Plinko">
+</p>
+
 ## Installation (für Spieler)
 
 - **Browser:** ein Lesezeichen mit dieser Adresse anlegen und im geöffneten Spiel anklicken. Nach jedem Neuladen der Seite erneut anklicken.
@@ -77,7 +83,8 @@ Weitere Befehle: `./scripts/dev.sh status | backup | unlink`. Alle Befehle gibt 
 | `mod/minigameCasino.js` | Minispiel des Casinos mit einem Spiel pro Casino: Roulette, Blackjack, Jackpot, Crash, Slots, Plinko (lädt das Spiel ab Casino-Stufe 1) |
 | `mod/info.txt` | Metadaten für Steam; das Format beschreibt `game/mods/ReadMe.txt` |
 | `mod/img/` | Eigene Grafiken des Mods |
-| `art/` | Skripte, die die Grafiken in `mod/img/` erzeugen (brauchen Pillow, siehe Kopf der Skripte) |
+| `art/` | Skripte, die die Grafiken in `mod/img/` und die Screenshots in `docs/screenshots/` erzeugen (brauchen Pillow, siehe Kopf der Skripte) |
+| `docs/screenshots/` | Screenshots der sechs Casinospiele für Readme und Workshop |
 | `scripts/dev.sh` | Alle Entwicklungsbefehle (ohne Argument aufrufen für eine Übersicht) |
 | `scripts/browser_dev.py` | Hält den Mod im Browser-Spiel geladen (wird von `dev.sh browser` gestartet) |
 | `types/` | Typ-Hinweise für die Autovervollständigung in VS Code |
