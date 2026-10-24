@@ -135,7 +135,9 @@ cmd_run() {
 	cmd_backup
 	# Processes started from VS Code may have ELECTRON_RUN_AS_NODE=1 set; `open` passes it on
 	# and the game (an Electron app) would then start as plain Node and exit immediately.
-	env -u ELECTRON_RUN_AS_NODE open -a "$APP" --args "--remote-debugging-port=$PORT"
+	# SteamAppId: the Steam client sets it when it starts the game; without it the game can't reach Steam
+	# (no cloud saves, no Workshop) because steamworks looks for steam_appid.txt in the working directory.
+	env -u ELECTRON_RUN_AS_NODE open --env SteamAppId=1454400 -a "$APP" --args "--remote-debugging-port=$PORT"
 	printf 'Warte auf Debug-Port %s' "$PORT"
 	for _ in $(seq 1 60); do
 		if debug_port_up; then

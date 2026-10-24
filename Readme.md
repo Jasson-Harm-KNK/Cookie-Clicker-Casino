@@ -11,7 +11,7 @@ Der Mod bringt das **Casino**, ein Spezialgebäude zwischen Alchemielabor und Po
   ```
   javascript:(function(){Game.LoadMod('https://jassonharm.github.io/Cookie-Clicker-Casino/mod/main.js');}());
   ```
-- **Steam:** den Mod im Steam Workshop abonnieren (Link folgt nach der Veröffentlichung) und im Spiel unter *Optionen → Mods verwalten* prüfen, dass er aktiv ist. Manuell geht es auch: den Ordner `mod/` nach `<Spielordner>/mods/local/` kopieren.
+- **Steam:** den Mod im [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3825954075) abonnieren und im Spiel unter *Optionen → Mods verwalten* prüfen, dass er aktiv ist. Manuell geht es auch: den Ordner `mod/` nach `<Spielordner>/mods/local/` kopieren.
 
 Solange der Mod auf Steam aktiv ist, sperrt das Spiel Steam-Errungenschaften, wie bei jedem Mod.
 
@@ -93,7 +93,7 @@ Weitere Befehle: `./scripts/dev.sh status | backup | unlink`. Alle Befehle gibt 
 
 1. In `mod/info.txt` die `ModVersion` erhöhen und `Date` (TT/MM/JJJJ) aktualisieren, bei Bedarf auch `GameVersion`. Die Beschreibung in `info.txt` wird beim ersten Hochladen zur Beschreibung im Workshop.
 2. Das Vorschaubild `mod/thumbnail.png` (unter 1 MB) erzeugt `art/casino.py`.
-3. Im Spiel *Optionen → Mods veröffentlichen → Veröffentlichte Mods aktualisieren* öffnen, beim Casino den Ordner `mod/` wählen und hochladen. Name, Beschreibung und Bilder ändert man auf der Workshop-Seite.
+3. Hochladen: Das Casino hat die Workshop-ID `3825954075`. Die Liste unter *Optionen → Mods veröffentlichen → Veröffentlichte Mods aktualisieren* bleibt in Steam 2.053 leer (Fehler im Spiel), deshalb über den Debug-Port aktualisieren, siehe `CLAUDE.md`. Name, Beschreibung, Bilder und Sichtbarkeit ändert man auf der [Workshop-Seite](https://steamcommunity.com/sharedfiles/filedetails/?id=3825954075).
 
 Die ID (`cookie clicker casino`) darf sich nie mehr ändern, denn das Spiel speichert die Daten des Mods unter dieser ID.
 
